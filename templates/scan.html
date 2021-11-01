@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <title>Dowell</title>
+
+    <script type="text/javascript">
+
+      function fileSelected() {
+
+        var count = document.getElementById('fileToUpload').files.length;
+
+              document.getElementById('details').innerHTML = "";
+
+              for (var index = 0; index < count; index ++)
+
+              {
+
+                     var file = document.getElementById('fileToUpload').files[index];
+
+                     var fileSize = 0;
+
+                     if (file.size > 1024 * 1024)
+
+                            fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
+
+                     else
+
+                            fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
+
+                     document.getElementById('details').innerHTML += 'Name: ' + file.name + '<br>Size: ' + fileSize + '<br>Type: ' + file.type;
+
+                     document.getElementById('details').innerHTML += '<p>';
+
+              }
+
+      }
+
+      function uploadFile() {
+
+        var fd = new FormData();
+
+              var count = document.getElementById('fileToUpload').files.length;
+
+              for (var index = 0; index < count; index ++)
+
+              {
+
+                     var file = document.getElementById('fileToUpload').files[index];
+
+                     fd.append('myFile', file);
+
+              }
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.upload.addEventListener("progress", uploadProgress, false);
+
+        xhr.addEventListener("load", uploadComplete, false);
+
+        xhr.addEventListener("error", uploadFailed, false);
+
+        xhr.addEventListener("abort", uploadCanceled, false);
+
+        xhr.open("POST", "{{ url_for('form') }}");
+
+        xhr.send(fd);
+
+      }
+
+      function uploadProgress(evt) {
+
+        if (evt.lengthComputable) {
+
+          var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+
+          document.getElementById('progress').innerHTML = percentComplete.toString() + '%';
+
+        }
+
+        else {
+
+          document.getElementById('progress').innerHTML = 'unable to compute';
+
+        }
+
+      }
+
+      function uploadComplete(evt) {
+
+        /* This event is raised when the server send back a response */
+
+        alert(evt.target.responseText);
+
+      }
+
+      function uploadFailed(evt) {
+
+        alert("There was an error attempting to upload the file.");
+
+      }
+
+      function uploadCanceled(evt) {
+
+        alert("The upload has been canceled by the user or the browser dropped the connection.");
+
+      }
+
+    </script>
+<style>
+input[type=text], select, textarea{
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+/* Style the submit button */
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+/* Style the container */
+.container {
+    width:40%;
+    margin:10px auto;
+    height:550px;
+    font-size:20px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  padding: 20px;
+  box-shadow:2px 2px 2px 2px rgba(0,0,0,0.5);
+
+}
+
+/* Floating column for labels: 25% width */
+.col-25 {
+  width: 25%;
+  margin-top: 6px;
+}
+
+/* Floating column for inputs: 75% width */
+.col-75 {
+  width: 75%;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+</style>
+</head>
+
+<body >
+    <div class="container">
+    <h1 align="center">Only Demo purpose</h1>
+
+
+
+
+  <form enctype="multipart/form-data" method="post" action="{{ url_for('form') }}">
+      
+    <div>
+        <label for="fileToUpload">Take/upload Photo </label><br />
+        <br>
+      <input style="margin-top:-100px" type="file" name="fileToUpload" id="fileToUpload" onchange="fileSelected();" accept="image/*" capture="camera" />
+<!--      <input type="text" name="loc" id="demo">-->
+<!--      <input type="text" name="ip" value="{{context.ip}}">-->
+         <input type="text" name="ipA" id="ipA">
+         <input type="text" name="coun" id="coun">
+         <input type="text" name="reg" id="reg">
+         <input type="text" name="cit" id="cit">
+         <input type="text" name="lat" id="lat">
+         <input type="text" name="lon" id="lon">
+
+
+    </div>
+    <div id="details"></div>
+
+    <div>
+      <input type="submit" class="submit" value="Upload" />
+
+    </div>
+<div>
+    <div id="progress"></div>
+
+  </form>
+  </div>
+
+<!--    <p id="city"></p>-->
+
+<!--    <p id="region"></p>-->
+<!--    <p id="country"></p>-->
+<!--    <p><button onclick="getLocation()">Get My Location</button></p>-->
+<!--<p id="demo2"></p>-->
+
+<!--    <p id="overall"></p>-->
+
+<!--<script>-->
+<!--               var x = document.getElementById("demo2");-->
+
+<!--function getLocation() {-->
+<!--  if (navigator.geolocation) {-->
+<!--    navigator.geolocation.getCurrentPosition(showPosition);-->
+<!--  } else {-->
+<!--    x.innerHTML = "Geolocation is not supported by this browser.";-->
+<!--  }-->
+<!--}-->
+
+<!--function showPosition(position) {-->
+<!--  x.innerHTML = "Latitude: " + position.coords.latitude +-->
+<!--  "<br>Longitude: " + position.coords.longitude;-->
+<!--}-->
+<!--                </script>-->
+
+
+     <script>
+
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+      var x = document.getElementById("ipA");
+      var r = document.getElementById("reg");
+      var c = document.getElementById("coun");
+      var o = document.getElementById("cit");
+      var la = document.getElementById("lat");
+      var lo = document.getElementById("lon");
+        $.get("http://ipinfo.io", function(response) {
+        x.value=response.ip;
+        o.value =response.city;
+        r.value =response.region;
+        c.value =response.country;
+    console.log(response.city, response.country);
+  lat.value = response.loc.substr(0, response.loc.indexOf(',')) ;
+   lon.value=response.loc.substr(1, response.loc.indexOf(','));
+}, "jsonp");
+
+
+function showPosition(position) {
+   console.log("this")
+  lat.value = position.coords.latitude ;
+   lon.value=position.coords.longitude;
+  }
+    </script>
+
+</body>
+
+</html>

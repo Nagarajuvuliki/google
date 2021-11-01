@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/static/css/styles.css" />
+        <title>Dowellnps | Questionnaire Form</title>
+    </head>
+    <body>
+        <nav></nav>
+        <main>
+            <div class="container">
+                <header>
+                    <h3>DowellNPS Form</h3>
+                    <p>Please fill out the form below</p>
+                </header>
+                <div id="contents">
+                    <section>
+                        <form action="{{ context.submit_url }}" method="post">
+                            <div class="platform">
+                                <p class="platform_input">
+                                    Please select the platform you saw us from
+                                </p>
+                                <input
+                                    type="text"
+                                    list="platform"
+                                    class="platform_input"
+                                    name="platform_input"
+                                    placeholder="{{ context.platforms[0].name }}"
+                                />
+                                <datalist id="platform">
+                                    {% for platform in context.platforms %}
+                                    <option
+                                        value="{{ platform.name }}"
+                                    ></option>
+                                    {% endfor %}
+                                </datalist>
+                            </div>
+                            <div class="category">
+                                <p class="category_input">
+                                    Please choose your category
+                                </p>
+                                <input
+                                    type="text"
+                                    list="category"
+                                    class="category_input"
+                                    name="category_input"
+                                    placeholder="{{ context.categories[0].name }}"
+                                />
+                                <datalist id="category">
+                                    {% for category in context.categories %}
+                                    <option value="{{ category.name }}">
+                                        {% endfor %}
+                                    </option>
+                                </datalist>
+                            </div>
+                            <div class="region">
+                                <p class="region_input">Region</p>
+                                <input
+                                    disabled="true"
+                                    type="text"
+                                    list="region"
+                                    class="region_input"
+                                    name="region_input"
+                                    value="Delhi"
+                                />
+                            </div>
+                            <div class="product">
+                                <p>Product</p>
+                                <label for="product_input">Enter product</label>
+                                <input
+                                    type="text"
+                                    name="product_input"
+                                    list="product"
+                                />
+                                <datalist id="product"></datalist>
+                            </div>
+                            <div class="brand">
+                                <p>Product's brand</p>
+                                <label for="brand_input"
+                                    >Enter product's brand</label
+                                >
+                                <input
+                                    type="text"
+                                    name="brand_input"
+                                    id="brand_input"
+                                />
+                            </div>
+                            <div class="satisfaction">
+                                <p>
+                                    On a scale of 1 - 5, how would you rate your
+                                    satisfaction with this product?
+                                </p>
+                                <div class="radio">
+                                    <input
+                                        type="radio"
+                                        name="level_satisfaction"
+                                        id="very unsatisfied"
+                                        value="1"
+                                    />
+                                    <label for="very unsatisfied">1</label>
+                                    <input
+                                        type="radio"
+                                        name="level_satisfaction"
+                                        id="slightly unsatisfied"
+                                        value="2"
+                                    />
+                                    <label for="slightly unsatisfied">2</label>
+                                    <input
+                                        type="radio"
+                                        name="level_satisfaction"
+                                        id="average"
+                                        value="3"
+                                    />
+                                    <label for="average">3</label>
+                                    <input
+                                        type="radio"
+                                        name="level_satisfaction"
+                                        id="slightly satisfied"
+                                        value="4"
+                                    />
+                                    <label for="slightly satisfied">4</label>
+                                    <input
+                                        type="radio"
+                                        name="level_satisfaction"
+                                        id="very satisfied"
+                                        value="5"
+                                    />
+                                    <label for="very satisfied">5</label>
+                                </div>
+                            </div>
+                            <div class="interested">
+                                <p>Would you use this product in future?</p>
+                                <input
+                                    type="text"
+                                    list="interested"
+                                    id="interested_input"
+                                    name="interested_input"
+                                    placeholder="Yes"
+                                />
+                                <datalist id="interested">
+                                    <option value="Yes"></option>
+                                    <option value="No"></option>
+                                </datalist>
+                            </div>
+                            <div class="email">
+                                <label for="email_input">Enter email</label>
+                                <input
+                                    type="email"
+                                    name="email_input"
+                                    id="email_input"
+                                    placeholder="info@example.com"
+                                />
+                                <div class="submit">
+                                    <button class="btn" type="submit">
+                                        Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                    <div class="navigation">
+                        <button type="menu" class="btn back">Back</button>
+                        <button type="menu" class="btn continue">
+                            Continue
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <script src="/static/js/scrollHandler.js"></script>
+        <script src="/static/js/getProducts.js"></script>
+        <script src="/static/js/handlePost.js"></script>
+    </body>
+</html>
